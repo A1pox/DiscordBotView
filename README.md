@@ -30,7 +30,6 @@
 
 ### 1 Клонирование репозитория
 ```bash
-# Клонируйте проект
 git clone https://github.com/A1pox/DiscordBotNet.git
 cd DiscordBotManager
 ```
