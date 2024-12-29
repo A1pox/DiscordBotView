@@ -1,0 +1,22 @@
+<!-- templates/guilds.html -->
+{% extends "base.html" %}
+{% block title %}Discord Bot - Список серверов{% endblock %}
+{% block content %}
+<h1>Список серверов</h1>
+{% if guilds %}
+  <ul>
+    {% for g in guilds %}
+      <li class="card">
+        <strong>{{ g[1] }}</strong> (ID: {{ g[0] }})
+        <br>
+        <a href="{{ url_for('channels_page', guild_id=g[0]) }}" class="btn" style="margin-top:5px;">Каналы</a>
+        <a href="{{ url_for('members_page', guild_id=g[0]) }}" class="btn">Участники</a>
+        <a href="{{ url_for('roles_page', guild_id=g[0]) }}" class="btn">Роли</a>
+        <a href="{{ url_for('audit_page', guild_id=g[0]) }}" class="btn">Аудит</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Бот не состоит ни в одной гильдии или ещё не инициализирован.</p>
+{% endif %}
+{% endblock %}

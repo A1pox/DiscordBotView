@@ -1,0 +1,26 @@
+<!-- templates/roles.html -->
+{% extends "base.html" %}
+{% block title %}Discord Bot - Роли{% endblock %}
+{% block content %}
+<h1>Роли на сервере "{{ guild.name }}" (ID {{ guild.id }})</h1>
+<p>Роли перечислены сверху вниз (как в Discord), где самая верхняя роль обычно имеет максимальный position.</p>
+
+<table>
+  <tr>
+    <th>Role</th>
+    <th>Position</th>
+    <th>Actions</th>
+  </tr>
+  {% for r in roles %}
+  <tr>
+    <td>{{ r[1] }} (ID: {{ r[0] }})</td>
+    <td>{{ r[2] }}</td>
+    <td>
+      <a href="{{ url_for('role_edit_page', guild_id=guild.id, role_id=r[0]) }}" class="btn">Изменить права</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<a href="{{ url_for('guilds_page') }}" class="btn">Вернуться к списку серверов</a>
+{% endblock %}

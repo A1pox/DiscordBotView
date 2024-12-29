@@ -1,0 +1,28 @@
+<!-- templates/role_edit.html -->
+{% extends "base.html" %}
+{% block title %}Discord Bot - Изменение прав роли{% endblock %}
+{% block content %}
+<h1>Изменение прав для роли "{{ role.name }}" (ID {{ role.id }})</h1>
+
+<form method="POST">
+  <table>
+    <tr>
+      <th>Право</th>
+      <th>Вкл./Выкл.</th>
+    </tr>
+    {% for flag, label in permissions_dict.items() %}
+      {% set current_val = current_flags.get(flag, False) %}
+      <tr>
+        <td>{{ label }}<br><small>{{ flag }}</small></td>
+        <td>
+          <input type="checkbox" name="{{ flag }}" {% if current_val %}checked{% endif %}>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  
+  <button type="submit" class="btn">Сохранить</button>
+</form>
+
+<a href="{{ url_for('roles_page', guild_id=guild.id) }}" class="btn" style="margin-top:20px;">Назад к ролям</a>
+{% endblock %}

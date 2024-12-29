@@ -1,0 +1,36 @@
+<!-- templates/channels.html -->
+{% extends "base.html" %}
+{% block title %}Discord Bot - Каналы{% endblock %}
+{% block content %}
+<h1>Каналы сервера "{{ guild.name }}" (ID {{ guild.id }})</h1>
+
+{% for cat in struct %}
+  {% if cat.category %}
+    <h2>Категория: {{ cat.category }} (ID: {{ cat.category_id }})</h2>
+    <ul>
+      {% for ch in cat.channels %}
+        <li>
+          <a href="{{ url_for('channel_view', guild_id=guild.id, channel_id=ch.id) }}">
+            {{ ch.name }} ({{ ch.type }})
+          </a>
+          [ID: {{ ch.id }}]
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <h2>Без категории</h2>
+    <ul>
+      {% for ch in cat.channels %}
+        <li>
+          <a href="{{ url_for('channel_view', guild_id=guild.id, channel_id=ch.id) }}">
+            {{ ch.name }} ({{ ch.type }})
+          </a>
+          [ID: {{ ch.id }}]
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endfor %}
+
+<a href="{{ url_for('guilds_page') }}" class="btn" style="margin-top: 20px;">Вернуться к списку серверов</a>
+{% endblock %}

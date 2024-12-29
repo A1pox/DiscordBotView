@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Треды форума{% endblock %}
+{% block content %}
+<h1>Форум: "{{ channel_name }}" (ID {{ channel_id }})</h1>
+
+<p>Этот форум содержит активные треды. Выберите интересующий вас тред:</p>
+
+{% if threads %}
+  <ul>
+    {% for t in threads %}
+      <li class="card">
+        <strong>Тред:</strong> {{ t.name }} <br>
+        <span style="color: #aaa;">ID: {{ t.id }}</span>
+        <br>
+        <a href="{{ url_for('channel_view', guild_id=guild_id, channel_id=t.id) }}" class="btn" style="margin-top: 10px;">Открыть тред</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Нет активных тредов на этом форуме.</p>
+{% endif %}
+
+<hr>
+<a href="{{ url_for('channels_page', guild_id=guild_id) }}" class="btn">Назад к каналам</a>
+{% endblock %}

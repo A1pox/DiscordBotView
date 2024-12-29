@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Сообщения канала{% endblock %}
+{% block content %}
+<h1>Канал ID {{ channel_id }} (Guild {{ guild_id }})</h1>
+
+{% if channel_type == "Forum" %}
+  <p>Это форум-канал. Ниже список тредов:</p>
+  {% if threads %}
+    <ul>
+    {% for t in threads %}
+      <li>
+        Тред: <strong>{{ t.name }}</strong> (ID: {{ t.id }})
+        <!-- Ссылка на тот же эндпоинт /channel/<thread_id> -->
+        <a href="{{ url_for('channel_view', guild_id=guild_id, channel_id=t.id) }}" class="btn">Открыть тред</a>
+      </li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>Нет активных тредов.</p>
+  {% endif %}
+
+{% elif channel_type in ["Text", "News", "Public Thread", "Private Thread", "Stage"]: %}
+  <form method="GET">
+    <label>Сколько сообщений показать:</label>
+    <input type="number" name="limit" value="{{ limit }}" style="width: 80px;">
+    <button type="submit" class="btn">Обновить</button>
+  </form>
+
+  {% if messages %}
+    <div style="margin-top: 20px;">
+      <h2>Сообщения ({{ messages|length }} шт.)</h2>
+      <!-- Старые вверху, новые внизу (мы уже reverse() в питоне) -->
+      <div style="display: flex; flex-direction: column;">
+        {% for msg in messages %}
+          <div class="card" style="margin-bottom: 8px; display: flex;">
+            <!-- Аватар -->
+            <div style="margin-right: 10px;">
+              <img src="{{ msg.author.display_avatar.url }}" alt="avatar" width="50" height="50" style="border-radius: 4px;">
+            </div>
+            <div>
+              <!-- Ник на сервере (или username), username#discrim, ID -->
+              <p>
+                <strong>
+                  {{ msg.author.nick if msg.author.nick else msg.author.name }}
+                </strong>
+                ({{ msg.author.name }}#{{ msg.author.discriminator }}, ID: {{ msg.author.id }})
+              </p>
+              <p style="color: #aaa; font-size: 0.9em;">
+                {{ msg.created_at }} UTC
+              </p>
+              <p>{{ msg.content }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <p>Нет сообщений или нет прав на их чтение.</p>
+  {% endif %}
+
+  <!-- Форма отправки сообщения -->
+  <div style="margin-top: 20px;">
+    <h3>Отправить сообщение</h3>
+    <form method="POST" action="{{ url_for('channel_send', guild_id=guild_id, channel_id=channel_id) }}">
+      <textarea name="content" rows="3" style="width:100%;"></textarea><br>
+      <button type="submit" class="btn">Отправить</button>
+    </form>
+  </div>
+
+{% else %}
+  <p>Невозможно отобразить этот тип канала: {{ channel_type }}</p>
+{% endif %}
+
+<hr>
+<a href="{{ url_for('channels_page', guild_id=guild_id) }}" class="btn">Назад к каналам</a>
+{% endblock %}

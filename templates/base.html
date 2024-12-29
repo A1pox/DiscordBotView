@@ -1,0 +1,127 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Discord Bot{% endblock %}</title>
+  <style>
+    /* === Общие стили для тёмной темы === */
+    body {
+      margin: 0; 
+      padding: 0;
+      background-color: #2e2e2e;
+      color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    a {
+      color: #61dafb; 
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    /* === Шапка/навбар === */
+    nav {
+      background-color: #444;
+      padding: 10px;
+    }
+    nav a {
+      margin-right: 15px;
+      color: #f0f0f0;
+      font-weight: bold;
+    }
+    
+    /* === Контейнер для контента === */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* === Кнопки === */
+    .btn {
+      background-color: #61dafb;
+      border: none;
+      color: #2e2e2e;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .btn:hover {
+      background-color: #4fb3dc;
+    }
+    .btn-danger {
+      background-color: #e06c75;
+    }
+    .btn-danger:hover {
+      background-color: #c65b63;
+    }
+
+    /* === Формы, инпуты === */
+    input[type="text"], input[type="password"], textarea, select {
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      border: 1px solid #666;
+      padding: 6px;
+      border-radius: 4px;
+      width: 100%;
+      box-sizing: border-box;
+      margin: 6px 0;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    /* === Блоки/карточки === */
+    .card {
+      background-color: #3a3a3a;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 4px;
+    }
+    .card h2, .card h3, .card h4 {
+      margin: 0;
+      padding: 0;
+      margin-bottom: 5px;
+    }
+
+    /* === Списки, таблицы === */
+    ul {
+      list-style: none;
+      margin: 0; 
+      padding: 0;
+    }
+    ul li {
+      margin: 5px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+    table th, table td {
+      border: 1px solid #555;
+      padding: 8px;
+    }
+    table th {
+      background-color: #3a3a3a;
+    }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <nav>
+    <a href="{{ url_for('index') }}">Главная</a>
+    <a href="{{ url_for('guilds_page') }}">Серверы</a>
+    <!-- При желании можно добавить ссылки на другие страницы -->
+  </nav>
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

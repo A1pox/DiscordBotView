@@ -1,0 +1,14 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+{% block title %}Discord Bot - Ввод токена{% endblock %}
+{% block content %}
+<h1>Введите токен бота</h1>
+<p>Для запуска бота в фоновом потоке, введите его токен:</p>
+<form method="POST">
+  <div class="form-group">
+    <label for="bot_token">Bot Token:</label>
+    <input type="text" name="bot_token" id="bot_token" placeholder="Bot Token" required>
+  </div>
+  <button type="submit" class="btn">Запустить</button>
+</form>
+{% endblock %}

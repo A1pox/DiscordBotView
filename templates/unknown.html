@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Неизвестный тип канала{% endblock %}
+
+{% block content %}
+<h1>Неизвестный тип канала</h1>
+<p>Канал с ID {{ channel_id }} имеет неизвестный тип: {{ channel_type }}.</p>
+<a href="{{ url_for('channels_page', guild_id=guild_id) }}" class="btn">Вернуться к списку каналов</a>
+{% endblock %}

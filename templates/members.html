@@ -1,0 +1,37 @@
+<!-- templates/members.html -->
+{% extends "base.html" %}
+{% block title %}Discord Bot - Участники{% endblock %}
+{% block content %}
+<h1>Участники сервера "{{ guild.name }}" (ID {{ guild.id }})</h1>
+<p>Всего: {{ members|length }}</p>
+
+<table>
+  <tr>
+    <th>Пользователь</th>
+    <th>Действия</th>
+  </tr>
+  {% for m in members %}
+  <tr>
+    <td>{{ m[1] }} (ID: {{ m[0] }})</td>
+    <td>
+      <!-- Кик -->
+      <form method="POST" action="{{ url_for('guild_kick', guild_id=guild.id) }}" style="display:inline;">
+        <input type="hidden" name="user_id" value="{{ m[0] }}">
+        <input type="text" name="reason" placeholder="Причина (необ.)" style="width:120px;">
+        <button type="submit" class="btn btn-danger">Kick</button>
+      </form>
+      <!-- Бан -->
+      <form method="POST" action="{{ url_for('guild_ban', guild_id=guild.id) }}" style="display:inline;">
+        <input type="hidden" name="user_id" value="{{ m[0] }}">
+        <input type="text" name="reason" placeholder="Причина (необ.)" style="width:120px;">
+        <button type="submit" class="btn btn-danger">Ban</button>
+      </form>
+      <!-- Unban (форма, если вдруг) -->
+      <!-- Обычно unban нужен, если чел уже в бане, так что это не всегда актуально -->
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<a href="{{ url_for('guilds_page') }}" class="btn">Вернуться к списку серверов</a>
+{% endblock %}

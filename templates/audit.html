@@ -1,0 +1,33 @@
+<!-- templates/audit.html -->
+{% extends "base.html" %}
+{% block title %}Discord Bot - Журнал аудита{% endblock %}
+{% block content %}
+<h1>Журнал аудита сервера (ID: {{ guild_id }})</h1>
+
+<form method="GET">
+  <label for="limit">Сколько записей:</label>
+  <input type="text" name="limit" id="limit" value="50" style="width:80px;">
+  <button type="submit" class="btn">Обновить</button>
+</form>
+
+{% if entries %}
+  <ul>
+    {% for e in entries %}
+      <li class="card">
+        <strong>{{ e.user.name }}#{{ e.user.discriminator if e.user else "Неизв. пользователь" }}</strong>
+        сделал <em>{{ e.action.name }}</em> 
+        над <strong>{{ e.target }}</strong>
+        <br>
+        <small>Время: {{ e.created_at }} UTC</small>
+        {% if e.reason %}
+          <div>Причина: {{ e.reason }}</div>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Нет записей или нет прав на просмотр аудита.</p>
+{% endif %}
+
+<a href="{{ url_for('guilds_page') }}" class="btn">Вернуться к списку серверов</a>
+{% endblock %}
